@@ -1,73 +1,159 @@
-# React + TypeScript + Vite
+# 360 Waste Management
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A multi-role smart waste-management dashboard built with React, TypeScript, Vite, Firebase, maps, analytics, QR workflows, and Gemini-powered assistance.
 
-Currently, two official plugins are available:
+The application is designed as a prototype platform for households, waste collectors, municipal officers, administrators, and state-level departments to view waste activity from different operational perspectives.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Highlights
 
-## React Compiler
+- **Role-based dashboards** for households, collectors, officers, administrators, and department users.
+- **Smart-bin status** with fill-level and status visualization.
+- **Household reward points** and recent waste-log tracking.
+- **QR-based household identification** for collection workflows.
+- **Collector route map** using Leaflet.
+- **AI waste assistant** for household questions.
+- **Image-based bin analysis** through Gemini Vision.
+- **Municipal and state analytics** with charts and map views.
+- **Firebase authentication / Firestore integration** available in the codebase.
+- **Responsive React UI** with motion, reusable components, and protected routes.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## User Roles
 
-## Expanding the ESLint configuration
+| Role | Main Experience |
+| --- | --- |
+| Household | Waste history, smart-bin status, points, QR identity, AI assistant |
+| Collector | Assigned route, bin priority, QR scan flow, photo analysis |
+| Officer | Zone-level monitoring and operational views |
+| Admin | User management, platform metrics, gamification configuration |
+| Department | State-level analytics, trends, district comparison, heatmap |
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Current Development Mode
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+The project currently runs with **mock mode enabled** in the authentication context so the UI can be demonstrated without a live Firebase login.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+For production use, review `src/contexts/AuthContext.tsx`, disable mock mode, configure Firebase, and validate all authorization rules server-side.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Tech Stack
+
+- React 18
+- TypeScript
+- Vite
+- React Router
+- Firebase Authentication / Firestore
+- Google Generative AI
+- Leaflet / React Leaflet
+- Recharts
+- Framer Motion
+- QRCode / QR reader
+- Tailwind utility tooling
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 18+ recommended
+- npm
+- A Firebase project if you want live authentication/data
+- A Gemini API key if you want AI features
+
+### Install
+
+```bash
+git clone https://github.com/KVL3159H/360-waste-management.git
+cd 360-waste-management
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Environment Variables
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Create a `.env` file in the project root when using live integrations:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```env
+VITE_FIREBASE_API_KEY=your_key
+VITE_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
+VITE_FIREBASE_PROJECT_ID=your_project_id
+VITE_FIREBASE_STORAGE_BUCKET=your_bucket
+VITE_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+VITE_FIREBASE_APP_ID=your_app_id
+VITE_FIREBASE_MEASUREMENT_ID=your_measurement_id
+
+VITE_GEMINI_API_KEY=your_gemini_key
 ```
+
+Do not commit real credentials.
+
+### Run Locally
+
+```bash
+npm run dev
+```
+
+Vite will print the local development URL in the terminal.
+
+## Available Scripts
+
+```bash
+npm run dev
+npm run build
+npm run lint
+npm run preview
+```
+
+## Application Routes
+
+The project uses protected role-based routes including:
+
+- `/household`
+- `/collector`
+- `/officer`
+- `/admin`
+- `/dept`
+
+The root route redirects to the login flow.
+
+## Architecture
+
+```text
+src/
+├── components/       reusable UI and layout components
+├── contexts/         authentication and language state
+├── hooks/            shared application data hooks
+├── lib/              Firebase and Gemini integrations
+├── pages/
+│   ├── household/
+│   ├── collector/
+│   ├── officer/
+│   ├── admin/
+│   └── state/
+├── App.tsx            routing and role protection
+└── main.tsx           React entry point
+```
+
+## Security Notes
+
+This repository is a prototype. Before real deployment:
+
+- disable mock authentication;
+- enforce Firebase security rules;
+- move privileged operations to trusted backend services;
+- restrict API keys appropriately;
+- never rely only on client-side role checks;
+- validate uploaded images and user-controlled data;
+- review privacy requirements before storing household/location data.
+
+## Roadmap
+
+- Replace mock authentication with production Firebase auth.
+- Add server-enforced role and permission checks.
+- Persist collector completion workflows.
+- Add production-ready waste-event APIs.
+- Add automated tests for protected routes and core business rules.
+- Add deployment documentation and monitoring.
+
+## Contributing
+
+Useful contributions include bug fixes, accessibility improvements, tests, documentation, and production-hardening work. Keep pull requests focused and include a short explanation of the behavior changed.
+
+---
+
+Built as a smart waste-management prototype focused on visibility from household level to state-level administration.
