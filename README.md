@@ -157,3 +157,14 @@ Useful contributions include bug fixes, accessibility improvements, tests, docum
 ---
 
 Built as a smart waste-management prototype focused on visibility from household level to state-level administration.
+
+## Development Quality Check
+
+Before opening a pull request, run:
+
+```bash
+npm run lint
+npm run build
+```
+
+The CI workflow runs the same production checks so local verification matches the repository pipeline.
